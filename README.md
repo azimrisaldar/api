@@ -1,164 +1,91 @@
-# Pix.City
+<p align="center"><a href="https://symfony.com" target="_blank">
+    <img src="https://symfony.com/logos/symfony_black_02.svg">
+</a></p>
 
-## Project architecture
+[Symfony][1] is a **PHP framework** for web and console applications and a set
+of reusable **PHP components**. Symfony is used by thousands of web
+applications and most of the [popular PHP projects][2].
 
-### Symfony
+Installation
+------------
 
-- Pix.City use the latest version of the Symfony framework 
-- Doctrine ORM for the database (with annotations)
-- Routes are defined in controllers with annotations
-- Twig for templating
-- Webpack for the assets (Javascript, CSS and static images)
-- Only few third party bundles are used :
-    - [FroalaEditorBundle](https://github.com/froala/KMSFroalaEditorBundle) for the integration of the Froala Wysiwyg
-    - [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) for image size/thumb management
-    - [OAuth2ClientBundle](https://github.com/knpuniversity/oauth2-client-bundle) for the Facebook/Google sign in
-    - [KnpSnappyBundle](https://github.com/KnpLabs/KnpSnappyBundle) for invoice generation
-        - To use KnpSnappyBundle [wkhtmltopdf](https://wkhtmltopdf.org) needs to be installed on the server
-    - [RevolutPhpBundle](https://github.com/sverraest/revolut-php-bundle) for bank transfer using [Revolut](https://business.revolut.com)
-    - [DdeboerVatinBundle](https://github.com/ddeboer/vatin-bundle) for VAT validation
-    
-### Directory structure
+* [Install Symfony][4] with Composer (see [requirements details][3]).
+* Symfony follows the [semantic versioning][5] strictly, publishes "Long Term
+  Support" (LTS) versions and has a [release process][6] that is predictable and
+  business-friendly.
 
-```
-Project
-└─── assets
-│   ├──── admin // CMS assets
-│   └──── front // Website assets
-│    
-├─── bin // console executable
-├─── config // Project and environnement configuration files (YAML)
-├─── public // Public root directory
-├─── sql // Some database backup, for developpement purpose
-├─── src
-│   ├──── Constant // Project constants. Basically it's some classes with static variables and functions
-│   ├──── Controller
-│   │    ├──── Admin // CMS controllers
-│   │    ├──── Front // Website controllers
-│   │    └──── Api // Some routes only used asynchronously (Ajax) and shared between CMS and Website
-│   │
-│   ├──── Doctrine // Doctrine specific functions
-│   ├──── Entity // Project entities - use Doctrine ORM annotations
-│   ├──── Form
-│   │    ├──── Admin // CMS form types
-│   │    ├──── Front // Website form types
-│   │    └──── Shared // Shared for types between CMS and Website
-│   │
-│   ├──── Migrations // Generated database migration files
-│   ├──── Repository // Entities repositories (most DQL queries are centralized here)
-│   ├──── Security // User login authenticators and guards
-│   ├──── Service // Shared service across the project
-│   ├──── Twig // Twig Extensions
-│   └──── Utils // Some shared tools across the project 
-│   
-├─── templates
-│   ├──── admin // CMS templates
-│   ├──── email // Emails templates
-│   └──── front // Front templates
-│
-└─── translations // some yml files for translations. Mostly used for the CMS and the website forms.
-```
+Sponsor
+-------
 
+Symfony 5.4 is [backed][27] by [Private Packagist][28].
 
-## Development environment
+Private Packagist is a fast, reliable, and secure Composer repository for your
+private packages. It mirrors all your open-source dependencies for better
+availability and monitors them for security vulnerabilities.
 
-### Pre-requisites
+Help Symfony by [sponsoring][29] its development!
 
-- A local MySQL database
-- Install [Composer](https://getcomposer.org/) on your local environment.
-- Install [NodeJS](https://nodejs.org/en/download/) on your local environment.
+Documentation
+-------------
 
-### Install the project
+* Read the [Getting Started guide][7] if you are new to Symfony.
+* Try the [Symfony Demo application][23] to learn Symfony in practice.
+* Discover Symfony ecosystem in detail with [Symfony The Fast Track][26].
+* Master Symfony with the [Guides and Tutorials][8], the [Components docs][9]
+  and the [Best Practices][10] reference.
 
-1. Pull the repositoryCopy the last backup of the database
- 
-2. Import the last sql backup (from inside the `sql` folder) 
+Community
+---------
 
-3. Install the project. `cd` into the project folder then run :
+* [Join the Symfony Community][11] and meet other members at the [Symfony events][12].
+* [Get Symfony support][13] on Stack Overflow, Slack, IRC, etc.
+* Follow us on [GitHub][14], [Twitter][15] and [Facebook][16].
+* Read our [Code of Conduct][24] and meet the [CARE Team][25].
 
-```
-composer install
-npm install
-```
+Contributing
+------------
 
-### Run the project on a local server
+Symfony is an Open Source, community-driven project with thousands of
+[contributors][19]. Join them [contributing code][17] or [contributing documentation][18].
 
-To start the PHP's built-in web server :
+Security Issues
+---------------
 
-```
-php bin/console server:run
-```
+If you discover a security vulnerability within Symfony, please follow our
+[disclosure procedure][20].
 
-Start assets watch with [Encore](https://www.npmjs.com/package/@symfony/webpack-encore) :
+About Us
+--------
 
-```
-npm run watch
-```
+Symfony development is sponsored by [SensioLabs][21], led by the
+[Symfony Core Team][22] and supported by [Symfony contributors][19].
 
-Or with `concurrently` both in the same time :
-
-```
-concurrently "npm run watch" "php bin/console server:run"
-```
-
-
-### Usefull commands
-
-> To check all the project routes :
-
-```
-php bin/console debug:router
-```
-
-> If you change the database entities (Doctrine) :
-
-- Backup the database
-- Check the mapping with : `php bin/console doctrine:schema:validate`
-- Create the diff file with : `php bin/console doctrine:migrations:diff`
-- Check the content of the diff file in the `src/Migrations` folder
-- Migrate the database with : `php bin/console doctrine:migrations:migrate`
-
-> Clear the cache 
-
-```
-php bin/console cache:clear
-```
-
-## Miscellaneous
-
-
-### Renew Instagram Access Token
-
-```
-https://www.instagram.com/oauth/authorize/?client_id=83becb285e6b44c18fec01b1473b4e93&redirect_uri=https://elfsight.com/service/generate-instagram-access-token/&response_type=code
-```
-
-## Update production
-
-Build the assets with Encore :
-
-```
-npm run build
-```
-
-If needed, migrate the database on the production server :
-```
-php bin/console doctrine:migrations:migrate
-```
-
-Clear the cache :
-
-```
-php bin/console cache:clear
-```
-
-
-## Developpers
-
-### Front-End (HTML/CSS)
-
-Bertrand GONTARD - bertrand@lesindependants.net
-
-### Back-End (PHP)
-
-Adrien LAMOTTE - adrien@lesindependants.net
+[1]: https://symfony.com
+[2]: https://symfony.com/projects
+[3]: https://symfony.com/doc/current/reference/requirements.html
+[4]: https://symfony.com/doc/current/setup.html
+[5]: https://semver.org
+[6]: https://symfony.com/doc/current/contributing/community/releases.html
+[7]: https://symfony.com/doc/current/page_creation.html
+[8]: https://symfony.com/doc/current/index.html
+[9]: https://symfony.com/doc/current/components/index.html
+[10]: https://symfony.com/doc/current/best_practices/index.html
+[11]: https://symfony.com/community
+[12]: https://symfony.com/events/
+[13]: https://symfony.com/support
+[14]: https://github.com/symfony
+[15]: https://twitter.com/symfony
+[16]: https://www.facebook.com/SymfonyFramework/
+[17]: https://symfony.com/doc/current/contributing/code/index.html
+[18]: https://symfony.com/doc/current/contributing/documentation/index.html
+[19]: https://symfony.com/contributors
+[20]: https://symfony.com/security
+[21]: https://sensiolabs.com
+[22]: https://symfony.com/doc/current/contributing/code/core_team.html
+[23]: https://github.com/symfony/symfony-demo
+[24]: https://symfony.com/coc
+[25]: https://symfony.com/doc/current/contributing/code_of_conduct/care_team.html
+[26]: https://symfony.com/book
+[27]: https://symfony.com/backers
+[28]: https://packagist.com/
+[29]: https://symfony.com/sponsor
