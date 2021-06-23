@@ -19,7 +19,7 @@ class DefaultController extends AbstractController
     public function index(Request $request,UserPasswordEncoderInterface $encoder): Response
     {
 
-        $em = $this->getDoctrine()->getManager(); 
+        $em = $this->getDoctrine()->getManager();
 
         $username = $request->get('username');
         $password = $request->get('password');
@@ -41,6 +41,6 @@ class DefaultController extends AbstractController
      */
     public function getUserDetails(): Response
     {
-        dd($this->getUser());
+        return new Response(sprintf('User %s successfully created', $this->getUser()->getUsername()));
     }
 }
